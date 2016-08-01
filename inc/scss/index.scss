@@ -1,0 +1,26 @@
+body, html {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	background-color: #F0EFEF;
+	color: #333;
+}
+
+.dropdown {
+	display: inline-block;
+	width: 200px;
+	border: 1px solid #000;
+	vertical-align: top;
+	.lable {
+		padding: 10px;
+		border: 1px solid #000;
+		margin: -1px;
+	}
+	div {
+		display: block;
+		border: 1px solid #000;
+		margin: -1px;
+		padding: 10px;
+	}
+}
