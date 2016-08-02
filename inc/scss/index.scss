@@ -10,17 +10,24 @@ body, html {
 .dropdown {
 	display: inline-block;
 	width: 200px;
-	border: 1px solid #000;
 	vertical-align: top;
-	.lable {
-		padding: 10px;
-		border: 1px solid #000;
-		margin: -1px;
+	&.viewActive {
+		.lable {
+			background-color: #ddf;
+		}
 	}
 	div {
 		display: block;
 		border: 1px solid #000;
-		margin: -1px;
+		margin-bottom: -1px;
 		padding: 10px;
+		&.viewActive {
+			background-color: #fdd;
+		}
 	}
+}
+
+.info {
+	position: absolute;
+	top: 220px;
 }

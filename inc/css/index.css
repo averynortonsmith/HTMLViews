@@ -9,16 +9,19 @@ body, html {
 .dropdown {
   display: inline-block;
   width: 200px;
-  border: 1px solid #000;
   vertical-align: top; }
-  .dropdown .lable {
-    padding: 10px;
-    border: 1px solid #000;
-    margin: -1px; }
+  .dropdown.viewActive .lable {
+    background-color: #ddf; }
   .dropdown div {
     display: block;
     border: 1px solid #000;
-    margin: -1px;
+    margin-bottom: -1px;
     padding: 10px; }
+    .dropdown div.viewActive {
+      background-color: #fdd; }
+
+.info {
+  position: absolute;
+  top: 220px; }
 
 /*# sourceMappingURL=index.css.map */

@@ -32,8 +32,13 @@ HTMLViews.parseViewString = function(fullString){
 }
 
 HTMLViews.getViewParent = function(elem, parsedView){
-	if (parsedView.parentString == "parent"){
-		return elem.parent()
+	if (parsedView.parentString.substring(0, 6) == "parent"){
+		if (parsedView.parentString == "parent"){
+			return elem.parent()
+		}
+		else {
+			return elem.parents().eq(parsedView.parentString.substring(7).slice(0, -1))
+		}
 	}
 	else if (parsedView.parentString == "this"){
 		return elem
@@ -43,6 +48,11 @@ HTMLViews.getViewParent = function(elem, parsedView){
 	}
 	else {
 		return $("body")
+		// var returnElem
+		// elem.each(function(){
+		// 	returnElem = eval('(' + parsedView.parentString + ')')
+		// })
+		// return returnElem
 	}
 }
 
@@ -74,25 +84,20 @@ HTMLViews.setView = function(elem, parsedView, toggle){
 
 HTMLViews.initialize = function(){
 	HTMLViews.viewParents = []
-	$('[data-view-setview]').each(function(){
-		var parsedView = HTMLViews.parseViewString($(this).data("view-setview"))
+	$('[data-view-setview], [data-view-hoverview], [data-view-toggleview]').each(function(){
+		if ($(this).data("view-setview")){
+			var parsedView = HTMLViews.parseViewString($(this).data("view-setview"))
+		}
+		else if ($(this).data("view-hoverview")){
+			var parsedView = HTMLViews.parseViewString($(this).data("view-hoverview"))
+		}
+		else {
+			var parsedView = HTMLViews.parseViewString($(this).data("view-toggleview"))
+		}
 		viewParent = HTMLViews.getViewParent($(this), parsedView)
 		viewParent.data("variableViews", {}).data("booleanViews", new Set())
 		HTMLViews.viewParents.push(viewParent)
-	})
-
-	$('[data-view-hoverview]').each(function(){
-		var parsedView = HTMLViews.parseViewString($(this).data("view-hoverview"))
-		viewParent = HTMLViews.getViewParent($(this), parsedView)
-		viewParent.data("variableViews", {}).data("booleanViews", new Set())
-		HTMLViews.viewParents.push(viewParent)
-	})
-
-	$('[data-view-toggleview]').each(function(){
-		var parsedView = HTMLViews.parseViewString($(this).data("view-toggleview"))
-		viewParent = HTMLViews.getViewParent($(this), parsedView)
-		viewParent.data("variableViews", {}).data("booleanViews", new Set())
-		HTMLViews.viewParents.push(viewParent)
+		$(this).css({"cursor": "pointer"})
 	})
 
 	$('[data-view-setview]').each(function(){
@@ -151,12 +156,41 @@ HTMLViews.render = function(){
 			}
 		}
 		if (visible){
-			$(this).show()
+			$(this).stop().fadeIn(300)
 		}
 		else {
-			$(this).hide()
+			$(this).stop().fadeOut(300)
 		}
 	})
+	$('[data-view-setview], [data-view-hoverview], [data-view-toggleview]').each(function(){
+		if ($(this).data("view-setview")){
+			var parsedView = HTMLViews.parseViewString($(this).data("view-setview"))
+		}
+		else if ($(this).data("view-hoverview")){
+			var parsedView = HTMLViews.parseViewString($(this).data("view-hoverview"))
+		}
+		else {
+			var parsedView = HTMLViews.parseViewString($(this).data("view-toggleview"))
+		}
+		viewParent = HTMLViews.getViewParent($(this), parsedView)
+		if (parsedView.viewType == "variable"){
+			if (viewParent.data("variableViews")[parsedView.variable] == parsedView.newView){
+				$(this).addClass("viewActive")
+			}
+			else {
+				$(this).removeClass("viewActive")
+			}
+		}
+		else {
+			if (viewParent.data("booleanViews").has(parsedView.newView)){
+				$(this).addClass("viewActive")
+			}
+			else {
+				$(this).removeClass("viewActive")
+			}
+		}
+	})
+
 }
 
 //source: http://stackoverflow.com/questions/2068272/getting-a-jquery-selector-for-an-element
@@ -182,108 +216,3 @@ jQuery.fn.getPath = function () {
 
     return path;
 };
-
-
-// // old code
-// View.initialize = function(){
-// 	
-
-
-// 	$('[data-view-toggleview]').each(function(){
-// 		$(this).click(function(e){
-// 			e.stopPropagation()
-// 			newView = $(this).data("view-toggleview")
-// 			viewParent = $(this).closest("[data-view-local]")
-// 			if (viewParent.length == 0){
-// 				viewParent = $("body")
-// 			}
-// 			if(newView.charAt(0) == ":"){
-// 				if(viewParent.data("subViews").has(newView)){
-// 					viewParent.data("subViews").delete(newView)
-// 				}
-// 				else {
-// 					viewParent.data("subViews").add(newView)
-// 				}
-// 			}
-// 			View.render()
-// 		})
-// 	})
-
-// 	$('[data-view-hoverview]').each(function(){
-// 		$(this).hover(function(e){
-// 			e.stopPropagation()
-// 			newView = $(this).data("view-hoverview")
-// 			viewParent = $(this).closest("[data-view-local]")
-// 			if (viewParent.length == 0){
-// 				viewParent = $("body")
-// 			}
-// 			if(newView.charAt(0) == ":"){
-// 				if(viewParent.data("subViews").has(newView)){
-// 					viewParent.data("subViews").delete(newView)
-// 				}
-// 				else {
-// 					viewParent.data("subViews").add(newView)
-// 				}
-// 			}
-// 			View.render()
-// 		})
-// 	})
-// 	View.render()
-// }
-
-// View.render = function(){
-// 	$('[data-view-view]').each(function(){
-// 		viewParent = $(this).closest("[data-view-local]")
-// 		if (viewParent.length == 0){
-// 			viewParent = $("body")
-// 		}
-// 		console.log(Array.from(viewParent.data("subViews")).indexOf($(this).data("view-view")) > -1)
-// 		if (viewParent.data("mainView") == $(this).data("view-view")){
-// 			$(this).show()
-// 		}
-// 		else if (Array.from(viewParent.data("subViews")).indexOf($(this).data("view-view")) > -1){
-// 			$(this).show()
-// 		}
-// 		else {
-// 			$(this).hide()
-// 		}
-// 	})
-// 	$('[data-view-setview], [data-view-toggleview]').each(function(){
-// 		viewParent = $(this).closest("[data-view-local]")
-// 		if (viewParent.length == 0){
-// 			viewParent = $("body")
-// 		}
-// 		if (viewParent.mainView == $(this).data("view-setview")){
-// 			$(this).addClass("viewActive")
-// 		}
-// 		else if (Array.from(viewParent.data("subViews")).indexOf($(this).data("view-setview")) > -1 || Array.from(viewParent.data("subViews")).indexOf($(this).data("view-toggleview")) > -1){
-// 			$(this).addClass("viewActive")
-// 		}
-// 		else {
-// 			$(this).removeClass("viewActive")
-// 		}
-// 	})
-// }
-
-// View.initialize()
-
-// $.fn.nextOrFirst = function(selector){
-//     var next = this.next(selector);
-//     return (next.length) ? next : this.siblings().first();
-// }
-
-// $.fn.prevOrLast = function(selector){
-//     var prev = this.prev(selector);
-//     return (prev.length) ? prev : this.siblings().last();
-// }
-
-// function escape(target) {
-// 	return target.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');      
-// }
-
-// function export_string(s){
-// 	var link = document.createElement('a');
-// 	link.setAttribute('href', 'data:text/plain,' + JSON.stringify(s));
-// 	link.setAttribute('download', 'export.txt');
-// 	document.getElementsByTagName("body")[0].appendChild(link).click().remove();
-// }
