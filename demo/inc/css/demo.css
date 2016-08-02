@@ -3,25 +3,96 @@ body, html {
   width: 100%;
   margin: 0px;
   padding: 0px;
+  font-family: sans-serif;
+  font-size: 14px;
   background-color: #F0EFEF;
-  color: #333; }
+  color: #444; }
 
-.dropdown {
+code {
+  background-color: #272822;
+  display: block;
+  color: #ddd;
+  padding: 20px 0px; }
+
+#music {
+  padding: 30px 0px; }
+  #music nav {
+    margin-bottom: 20px; }
+    #music nav div {
+      display: inline-block;
+      background-color: #ccc;
+      padding: 10px 16px;
+      margin-right: 8px;
+      border-radius: 3px;
+      transition: background-color 300ms; }
+      #music nav div:hover {
+        background-color: #b0c7e1; }
+      #music nav div.viewActive {
+        background-color: #b0c7e1; }
+  #music .item {
+    line-height: 24px;
+    background-color: #ddd;
+    padding: 3px 10px;
+    margin: 1px; }
+  #music .info {
+    line-height: 26px;
+    font-size: 16px;
+    font-family: Consolas, monaco, monospace;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #aaa; }
+
+.responsive {
+  width: 50%;
+  margin-left: 25%; }
+  @media (max-width: 1200px) {
+    .responsive {
+      width: 70%;
+      margin-left: 15%; } }
+  @media (max-width: 600px) {
+    .responsive {
+      width: 90%;
+      margin-left: 5%; } }
+
+#hello {
+  padding: 30px 0px;
+  height: 200px; }
+  #hello .button {
+    display: inline-block;
+    background-color: #ccc;
+    padding: 10px 16px;
+    margin-right: 8px;
+    border-radius: 3px;
+    transition: background-color 300ms; }
+    #hello .button:hover {
+      background-color: #b0c7e1; }
+    #hello .button.viewActive {
+      background-color: #b0c7e1; }
+  #hello .message {
+    margin-top: 10px;
+    font-size: 20px; }
+
+#dropdown {
+  padding: 30px 0px;
+  height: 200px;
   display: inline-block;
-  width: 200px;
   vertical-align: top; }
-  .dropdown.viewActive .lable {
-    background-color: #ddf; }
-  .dropdown div {
+  #dropdown #lable {
+    padding: 10px;
+    border: 1px solid #555;
+    width: 200px;
+    color: #222;
+    background-color: #bbb; }
+  #dropdown a {
+    width: 200px;
     display: block;
-    border: 1px solid #000;
-    margin-bottom: -1px;
-    padding: 10px; }
-    .dropdown div.viewActive {
-      background-color: #fdd; }
-
-.info {
-  position: absolute;
-  top: 220px; }
+    text-decoration: none;
+    color: inherit;
+    padding: 10px;
+    border: 1px solid #555;
+    margin-top: -1px;
+    transition: background-color 300ms; }
+    #dropdown a:hover {
+      background-color: #ddd; }
 
 /*# sourceMappingURL=demo.css.map */

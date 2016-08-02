@@ -2,6 +2,6 @@
 
 sass --watch inc/scss:inc/css &
 
-subl ../HTMLViews.js
+subl ../src/main.js
 subl index.html
 subl inc/scss/demo.scss
