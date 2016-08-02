@@ -1,0 +1,27 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  background-color: #F0EFEF;
+  color: #333; }
+
+.dropdown {
+  display: inline-block;
+  width: 200px;
+  vertical-align: top; }
+  .dropdown.viewActive .lable {
+    background-color: #ddf; }
+  .dropdown div {
+    display: block;
+    border: 1px solid #000;
+    margin-bottom: -1px;
+    padding: 10px; }
+    .dropdown div.viewActive {
+      background-color: #fdd; }
+
+.info {
+  position: absolute;
+  top: 220px; }
+
+/*# sourceMappingURL=demo.css.map */
