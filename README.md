@@ -42,7 +42,7 @@ To use the library, just include a link to `HTMLViews.js`:
 
 ### <a name="vars">Variable Views:</a>
 
-A variable view can only have one state at a time. The music UI example above uses variable views; Setting the view to a certain value, like `'songs'`, automatically deselects the other views: `'artists'`, and `'albums'`.
+A variable view can only have one state at a time. The music UI example above uses variable views; setting the view to a certain value, like `'songs'`, automatically deselects the other views: `'artists'`, and `'albums'`.
 
 Variable views are set using the `data-view-setview` attribute. When an element with this attribute is clicked, it will set the view to the specified value:
 
@@ -50,9 +50,11 @@ Variable views are set using the `data-view-setview` attribute. When an element 
 <div data-view-setview="songs">Songs</div>
 ```
 
-What if I need multiple variable views? You can accomplish this using named variable views. When no named variable is specified for a variable view, the variable name defaults to `mainView`. The example above is therefore equivalent to:
+What if I need multiple variable views? You can accomplish this using named variable views. When no named variable is specified for a variable view, the variable name defaults to `mainView`:
 
 ```html
+<!-- these are eqiuvalent -->
+<div data-view-setview="songs">Songs</div>
 <div data-view-setview="mainView=songs">Songs</div>
 ```
 
@@ -71,7 +73,7 @@ You can set as many named variable views as you like using the syntax `data-view
 
 Boolean views, unlike variable views, can only have two values: _enabled_, and _disabled_. Toggling a boolean view on or off doesn't affect the other views on a page. This makes boolean views helpful for creating dynamic sub-elements within other views.
 
-Boolean views must state with a ":", for example `data-view-setview=":dropdown"`. In addition to `data-view-setview`, boolean views can also use the following data-arrtibutes:
+Boolean views must state with a `':'`, for example `data-view-setview=":dropdown"`. In addition to `data-view-setview`, boolean views can also use the following data-arrtibutes:
 
 `data-view-toggleview` clicking toggles a boolean view on / off
 
@@ -101,7 +103,7 @@ What if we want to make multiple dropdown menus, as in the previous example? We 
 ![](https://raw.githubusercontent.com/averynortonsmith/HTMLViews/master/images/overlap.gif)
 ^ this is bad
 
-Views aren't global; when we set a view, we really set a view for a specific DOM element. By default, views are set and read from the `body` element. `data-view-setview="message=hello"` really sets the message view of the `<body>` element to `'hello'`, and an element with `data-view-on="message=hello"` will be displayed when the message view of the `<body>` element equals `'hello'`. We can set views for elements other than `<body>` using the following:
+Views aren't global; when we set a view, we really set a view for a specific DOM element. By default, views are set and read from the `<body>` element. `data-view-setview="message=hello"` really sets the message view of the `<body>` element to `'hello'`, and an element with `data-view-on="message=hello"` will be displayed when the message view of the `<body>` element equals `'hello'`. We can set views for elements other than `<body>` using the following:
 
 #### this
 
@@ -118,7 +120,7 @@ Sets the view of an element's parent.
 `data-view-setview="parent[n]|variable=value"` or `data-view-setview="parent[n]:variable"`
 Sets the view of an element's ancestor, where n is degrees of separation. `parent[1]` is the parent, `parent[2]` the grandparent, etc.
 
-Using relative views, we can reengineer our dropdown elements so that they don't interfere with the other views in a page:
+Using relative views, we can re-engineer our dropdown menus so that they don't interfere with the other views in a page:
 ```html 
 <!-- dropdown menu using boolean views -->
 <div data-view-hoverview="this:dropdown">
@@ -144,7 +146,7 @@ Whenever a view is set, any view-setting elements which correspond to the view a
 
 #### `data-view-fade`:
 
-By default, elements are shown / hidden instantaneously. The show / hide duration can be controlled using the `data-view-fade` attribute (in milliseconds). For example, the dropdowns in the above gif use a `data-view-fade=200`.
+By default, elements are shown / hidden instantaneously. The show / hide duration can be controlled using the `data-view-fade` attribute (in milliseconds). For example, the dropdown menus in the above gif use a `data-view-fade=200`.
 
 #### `data-view-default`:
 
