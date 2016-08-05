@@ -11,8 +11,8 @@ Show and hide different content and views using simple data-attributes. No JS co
 </nav>
 
 <div data-view-on="songs">(List of songs)</div>
-<div data-view-on="songs">(List of artists)</div>
-<div data-view-on="songs">(List of albums)</div>
+<div data-view-on="artists">(List of artists)</div>
+<div data-view-on="albums">(List of albums)</div>
 ```
 <a name="firstGIF">![](https://raw.githubusercontent.com/averynortonsmith/HTMLViews/master/images/variableViews.gif)</a>
 
