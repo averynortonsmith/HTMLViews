@@ -1,0 +1,22 @@
+{
+  "name": "htmlviews",
+  "version": "1.0.0",
+  "description": "Change views withing a webapp without writing jQuery",
+  "main": "HTMLViews.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/averynortonsmith/HTMLViews.git"
+  },
+  "author": "Avery Nortonsmith <averyn@mit.edu> (http://web.mit.edu/averyn/www)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/averynortonsmith/HTMLViews/issues"
+  },
+  "homepage": "https://github.com/averynortonsmith/HTMLViews",
+  "dependencies": {
+    "jquery": "^3.1.0"
+  }
+}

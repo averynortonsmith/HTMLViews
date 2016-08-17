@@ -1,3 +1,12 @@
+(function(){
+	var elements = document.querySelectorAll('[data-view-show]')
+	Array.prototype.forEach.call(elements, function(el, i){
+		el.style.display = "none"
+	});
+}());
+
+var $ = require("jquery")
+
 $("document").ready(function(){
 	HTMLViews.initialize()
 })
@@ -56,7 +65,7 @@ HTMLViews.getViewParent = function(elem, parsedView){
 	}
 }
 
-HTMLViews.setView = function(elem, parsedView, toggle, remove){
+HTMLViews.setView = function(elem, parsedView, toggle){
 	var viewParent = HTMLViews.getViewParent(elem, parsedView)
  	if (parsedView.viewType == "variable"){
 		var variableViews = viewParent.data("variableViews")
@@ -72,11 +81,6 @@ HTMLViews.setView = function(elem, parsedView, toggle, remove){
 			else {
 				booleanViews.add(parsedView.newView)
 			}
-			viewParent.data("booleanViews", booleanViews)
-		}
-		else if (remove) {
-			var booleanViews = viewParent.data("booleanViews")
-			booleanViews.remove(parsedView.newView)
 			viewParent.data("booleanViews", booleanViews)
 		}
 		else {
@@ -109,7 +113,7 @@ HTMLViews.initialize = function(){
 		$(this).click(function(e){
 			e.stopPropagation()
 
-			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-setview")), false, false)
+			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-setview")), false)
 			HTMLViews.render()
 		})
 	})
@@ -118,7 +122,7 @@ HTMLViews.initialize = function(){
 		$(this).hover(function(e){
 			e.stopPropagation()
 
-			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-hoverview")), true, false)
+			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-hoverview")), true)
 			HTMLViews.render()
 		})
 	})
@@ -127,16 +131,7 @@ HTMLViews.initialize = function(){
 		$(this).click(function(e){
 			e.stopPropagation()
 
-			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-toggleview")), true, false)
-			HTMLViews.render()
-		})
-	})
-
-	$('[data-view-removeview]').each(function(){
-		$(this).click(function(e){
-			e.stopPropagation()
-
-			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-removeview")), false, true)
+			HTMLViews.setView($(this), HTMLViews.parseViewString($(this).data("view-toggleview")), true)
 			HTMLViews.render()
 		})
 	})
@@ -178,18 +173,15 @@ HTMLViews.render = function(){
 			$(this).stop().fadeOut(fadeSpeed)
 		}
 	})
-	$('[data-view-setview], [data-view-hoverview], [data-view-toggleview], [data-view-removeview]').each(function(){
+	$('[data-view-setview], [data-view-hoverview], [data-view-toggleview]').each(function(){
 		if ($(this).data("view-setview")){
 			var parsedView = HTMLViews.parseViewString($(this).data("view-setview"))
 		}
 		else if ($(this).data("view-hoverview")){
 			var parsedView = HTMLViews.parseViewString($(this).data("view-hoverview"))
 		}
-		else if ($(this).data("view-toggleview")){
-			var parsedView = HTMLViews.parseViewString($(this).data("view-toggleview"))
-		}
 		else {
-			var parsedView = HTMLViews.parseViewString($(this).data("view-removeview"))
+			var parsedView = HTMLViews.parseViewString($(this).data("view-toggleview"))
 		}
 		viewParent = HTMLViews.getViewParent($(this), parsedView)
 		if (parsedView.viewType == "variable"){
