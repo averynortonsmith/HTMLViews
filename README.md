@@ -16,14 +16,20 @@ Show and hide different content and views using simple data-attributes. No JS co
 ```
 <a name="firstGIF">![](https://raw.githubusercontent.com/averynortonsmith/HTMLViews/master/images/variableViews.gif)</a>
 
-#### How to use:
+#### Install:
 
-To use the library, just include a link to `HTMLViews.js`:
+In a webpage:
 
 ```html
 	...
-	<script src="HTMLViews.js" ></script>
+	<script src="https://cdn.rawgit.com/averynortonsmith/HTMLViews/master/HTMLViews.js" ></script>
 </body>
+```
+
+Install with npm:
+
+```
+npm install htmlviews
 ```
 
 ## Documentation:
@@ -161,18 +167,14 @@ Used to specify default views for a page. View-setting elements with the `data-v
 
 ### <a name="dev">Developement:</a>
 
-Developement notes: there are three JS files relevant to this project: `initialize.js`, `jquery.min.js`, and `main.js`. These all live in the `/src` directory. `initialize.js` is just a few lines of code to prevent a flash of unstyled content before jQuery loads. `main.js` is where all of the core JS for the project is. 
-
-To include these files in a site:
+You can install HTMLViews for development through npm:
 
 ```html
 	...
-	<script src="src/initialize.js" ></script>
-	<script src="src/jquery.min.js" ></script>
-	<script src="src/main.js" ></script>
+	<script src="HTMLViews.js" ></script>
 </body>
 ```
 
-`build.py` simply takes these three scripts, concatenates them in the correct order, and saves the bundled result as `HTMLViews.js`. You can run it with `python build.py`, using python 2 or 3. 
+To build to project:
 
-`images/` contains GIFs for the README.
+`browserify src/main.js -o HTMLViews.js`
