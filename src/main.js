@@ -1,3 +1,5 @@
+// start by hiding all elements that have '[data-view-show]'
+// to prevent a flash-of-unstyled-content
 (function(){
 	var elements = document.querySelectorAll('[data-view-show]')
 	Array.prototype.forEach.call(elements, function(el, i){
@@ -5,6 +7,7 @@
 	});
 }());
 
+// get jQuery (Browserify)
 var $ = require("jquery")
 
 $("document").ready(function(){
@@ -13,6 +16,7 @@ $("document").ready(function(){
 
 HTMLViews = {}
 
+// take a 'view string' (the string value of a data-ex-setview attribute, or other view-setting attribute)
 HTMLViews.parseViewString = function(fullString){
 	if (fullString.indexOf(":") > -1){
 		var parentString = fullString.slice(0, fullString.indexOf(":"))
@@ -40,12 +44,14 @@ HTMLViews.parseViewString = function(fullString){
 	return {"newView": newView, "parentString": parentString, "viewType": viewType, "variable": variable}
 }
 
+// figure out which element contains the view-scope for this element
 HTMLViews.getViewParent = function(elem, parsedView){
 	if (parsedView.parentString.substring(0, 6) == "parent"){
 		if (parsedView.parentString == "parent"){
 			return elem.parent()
 		}
 		else {
+			// (gets the nth closest ancestor, i.e. parent[2] would be the grandparent)
 			return elem.parents().eq(parsedView.parentString.substring(7).slice(0, -1))
 		}
 	}
@@ -65,6 +71,7 @@ HTMLViews.getViewParent = function(elem, parsedView){
 	}
 }
 
+// set a view in the appropriate scope, using the data from a parsed view-string
 HTMLViews.setView = function(elem, parsedView, toggle){
 	var viewParent = HTMLViews.getViewParent(elem, parsedView)
  	if (parsedView.viewType == "variable"){
@@ -91,6 +98,8 @@ HTMLViews.setView = function(elem, parsedView, toggle){
 	}
 }
 
+// set the default view variables for elements which define view scopes
+// set click / hover / toggle bindings for view-setting elements
 HTMLViews.initialize = function(){
 	HTMLViews.viewParents = []
 	$('[data-view-setview], [data-view-hoverview], [data-view-toggleview]').each(function(){
@@ -140,6 +149,7 @@ HTMLViews.initialize = function(){
 	$('[data-view-default]').click()
 }
 
+// for debuggin, prints out a list of the view states of the page
 HTMLViews.showViews = function(){
 	for(var elem in HTMLViews.viewParents){
 		console.log(HTMLViews.viewParents[elem].getPath())
@@ -150,6 +160,7 @@ HTMLViews.showViews = function(){
 	}
 }
 
+// show / hide all of the elements on a page, based on the current view states
 HTMLViews.render = function(){
 	$('[data-view-on]').each(function(){
 		var parsedView = HTMLViews.parseViewString($(this).data("view-on"))
