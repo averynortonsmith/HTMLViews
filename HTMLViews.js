@@ -10189,11 +10189,14 @@ HTMLViews.initialize = function(){
 		else {
 			var parsedView = HTMLViews.parseViewString($(this).data("view-toggleview"))
 		}
-		viewParent = HTMLViews.getViewParent($(this), parsedView)
+		var viewParent = HTMLViews.getViewParent($(this), parsedView)
 		viewParent.data("variableViews", {}).data("booleanViews", new Set())
 		HTMLViews.viewParents.push(viewParent)
 		$(this).css({"cursor": "pointer"})
 	})
+	viewParent = $("body")
+	viewParent.data("variableViews", {}).data("booleanViews", new Set())
+	HTMLViews.viewParents.push(viewParent)
 
 	$('[data-view-setview]').each(function(){
 		$(this).click(function(e){
